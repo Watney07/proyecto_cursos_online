@@ -27,3 +27,4 @@ switch($action) {
     default:
         echo "Acción no definida.";
 }
+

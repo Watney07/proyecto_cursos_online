@@ -1,24 +1,26 @@
 <?php
-require_once 'db.php';
+require_once __DIR__ . '/db.php';
 
 class Material {
-    private $conn;
+    private $db;
 
     public function __construct() {
-        $this->conn = Database::getConnection();
+        $this->db = Database::getConnection();
     }
 
-    public function getByModulo($id_modulo) {
-        $sql = "SELECT m.id_material, m.titulo, m.tipo, m.url
-                FROM MATERIAL m
-                JOIN ACCESO_MODULO am ON am.id_modulo = m.id_modulo
-                WHERE m.id_modulo = ? AND am.id_estudiante = ?
-                ORDER BY m.id_material ASC";
-
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('ii', $id_modulo, $_SESSION['estudiante_id']);
-        $stmt->execute();
-        return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+    // Solo devuelve los materiales del módulo a los que el estudiante tiene acceso
+    public function getByModuloYEstudiante($id_modulo, $id_estudiante) {
+        $stmt = $this->db->prepare("
+            SELECT m.*
+            FROM MATERIAL m
+            JOIN MODULO mod ON m.id_modulo = mod.id_modulo
+            JOIN ACCESO_MODULO am ON mod.id_modulo = am.id_modulo
+            WHERE m.id_modulo = :id_modulo AND am.id_estudiante = :id_estudiante
+        ");
+        $stmt->execute([
+            ':id_modulo' => $id_modulo,
+            ':id_estudiante' => $id_estudiante
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
-?>

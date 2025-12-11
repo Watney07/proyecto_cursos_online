@@ -1,3 +1,7 @@
+<h2>Bienvenido, <?= htmlspecialchars($_SESSION['nombre']) ?></h2>
+<a href="/index.php?action=logout">Cerrar sesión</a>
+
+<h3>Mis Módulos Asignados</h3>
 <?php foreach ($modulos as $mod): ?>
     <div>
         <h4><?= htmlspecialchars($mod['titulo']) ?> (Curso: <?= htmlspecialchars($mod['curso_nombre']) ?>, Versión: <?= htmlspecialchars($mod['numero_version']) ?>)</h4>

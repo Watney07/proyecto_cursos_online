@@ -13,9 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user && password_verify($password, $user['password'])) {
-        $_SESSION['id_estudiante'] = $user['id_estudiante'];
-        $_SESSION['nombre'] = $user['nombre'];
-        header("Location: dashboard.php");
+        // Mantener nombres consistentes con controllers
+        $_SESSION['estudiante_id'] = $user['id_estudiante'];
+        $_SESSION['estudiante_nombre'] = $user['nombre'];
+
+        header("Location: /proyecto_cursos_online/public/index.php?action=mis_modulos");
+
         exit;
     } else {
         $error = "Email o contraseña incorrectos";
@@ -28,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Login - Cursos Online</title>
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>Iniciar sesión</h1>
     <?php if ($error) echo "<p style='color:red;'>$error</p>"; ?>
     <form method="POST">
         <label>Email:</label><br>

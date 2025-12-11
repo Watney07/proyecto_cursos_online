@@ -1,9 +1,7 @@
-<?php
-if (empty($materiales)) {
+<?php if (empty($materiales)) {
     echo "<p>No tienes acceso a materiales para este módulo.</p>";
     return;
-}
-?>
+} ?>
 
 <h3>Materiales del módulo</h3>
 <ul>
