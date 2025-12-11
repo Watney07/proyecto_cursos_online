@@ -6,3 +6,7 @@
 
 <br>
 <a href="index.php?controller=curso&action=index">Volver</a>
+
+<a href="index.php?action=versiones&id_curso=<?= $curso['id_curso'] ?>" class="btn btn-primary">
+    Ver Versiones
+</a>

@@ -12,6 +12,7 @@ $db = new Database($config['db']);
 $pdo = $db->connect();
 
 require_once __DIR__ . '/../controllers/CursoController.php';
+require_once __DIR__ . '/../controllers/VersionCursoController.php';
 
 $controller = $_GET['controller'] ?? 'curso';
 $action = $_GET['action'] ?? 'index';
@@ -28,11 +29,51 @@ switch ($controller) {
         die("Controlador no encontrado.");
 }
 
+switch ($controller) {
+    case 'curso':
+        $ctrl = new CursoController($pdo);
+        break;
+
+    case 'version':
+        $ctrl = new VersionCursoController($pdo);
+        break;
+
+    default:
+        die("Controlador no encontrado.");
+}
+
 if (!method_exists($ctrl, $action)) {
     die("Acción '$action' no existe.");
 }
 
 $id ? $ctrl->$action($id) : $ctrl->$action();
+
+// Versiones
+case 'versiones':
+    $controller = new VersionCursoController();
+    $controller->index($_GET['id_curso']);
+    break;
+
+case 'crear_version':
+    $controller = new VersionCursoController();
+    $controller->create($_GET['id_curso']);
+    break;
+
+case 'editar_version':
+    $controller = new VersionCursoController();
+    $controller->edit($_GET['id']);
+    break;
+
+case 'ver_version':
+    $controller = new VersionCursoController();
+    $controller->view($_GET['id']);
+    break;
+
+case 'eliminar_version':
+    $controller = new VersionCursoController();
+    $controller->delete($_GET['id']);
+    break;
+
 
 ?><!doctype html>
 <html>
