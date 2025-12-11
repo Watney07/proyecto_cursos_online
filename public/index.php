@@ -1,6 +1,9 @@
 <?php
 session_start();
 
+// Define la ruta base de tu proyecto
+define('BASE_URL', '/proyecto_cursos_online');
+
 require_once __DIR__ . '/../controllers/UsuarioController.php';
 require_once __DIR__ . '/../controllers/ModuloController.php';
 
@@ -27,4 +30,3 @@ switch($action) {
     default:
         echo "Acción no definida.";
 }
-

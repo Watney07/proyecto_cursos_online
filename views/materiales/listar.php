@@ -13,4 +13,5 @@
 <?php endforeach; ?>
 </ul>
 
-<a href="/index.php?action=mis_modulos">Volver a Mis Módulos</a>
+<a href="<?= BASE_URL ?>/public/index.php?action=mis_modulos">Volver a Mis Módulos</a>
+
