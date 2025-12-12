@@ -16,6 +16,13 @@ class ModuloController {
         }
 
         $materiales = $this->moduloModel->getMateriales($id_modulo);
-        require_once __DIR__ . '/../views/materiales/listar.php';
+
+        // CAPTURAR LA VISTA
+        ob_start();
+        require __DIR__ . '/../views/materiales/listar.php';
+        $contenido = ob_get_clean();
+
+        // MOSTRAR DENTRO DEL LAYOUT
+        require __DIR__ . '/../views/layout.php';
     }
 }

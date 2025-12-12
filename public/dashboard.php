@@ -21,27 +21,45 @@ $stmt = $pdo->prepare("
 $stmt->execute([$id_estudiante]);
 $modulos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>Dashboard - <?php echo $_SESSION['nombre']; ?></title>
+    <link rel="stylesheet" href="/proyecto_cursos_online/public/styles.css">
+
 </head>
 <body>
+
+<div class="container">
+
+    <div class="topbar">
+        <a href="logout.php" class="logout-link">Cerrar sesión</a>
+    </div>
+
     <h1>Bienvenido, <?php echo $_SESSION['nombre']; ?></h1>
-    <a href="logout.php">Cerrar sesión</a>
 
     <h2>Mis Módulos Asignados</h2>
+
     <?php if ($modulos): ?>
-        <ul>
+        <ul class="module-list">
             <?php foreach ($modulos as $mod): ?>
                 <li>
-                    <strong><?php echo $mod['titulo']; ?></strong> (Curso: <?php echo $mod['curso']; ?>, Versión: <?php echo $mod['numero_version']; ?>)<br>
-                    <?php echo $mod['descripcion']; ?>
+                    <strong><?php echo $mod['titulo']; ?></strong>
+                    <br>
+                    <small>
+                        Curso: <?php echo $mod['curso']; ?> |
+                        Versión: <?php echo $mod['numero_version']; ?>
+                    </small>
+                    <p><?php echo $mod['descripcion']; ?></p>
                 </li>
             <?php endforeach; ?>
         </ul>
     <?php else: ?>
-        <p>No tienes módulos asignados aún.</p>
+        <p class="empty-msg">No tienes módulos asignados aún.</p>
     <?php endif; ?>
+
+</div>
+
 </body>
 </html>
